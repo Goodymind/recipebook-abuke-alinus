@@ -1,27 +1,37 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from .recipes.recipe_parser import parse_recipes
 
-ctx_recipes = {}
-ctx_recipes_loaded = False
-
-def index(request):
-    return HttpResponse('index')
+CTX_RECIPES = {}
+CTX_RECIPES_LOADED = False
 
 def load_recipes():
-    global ctx_recipes
-    global ctx_recipes_loaded
-    if not ctx_recipes_loaded:
-        ctx_recipes = parse_recipes()
-        ctx_recipes_loaded = True
+    '''
+        loads the recipes for use
+    '''
+
+    global CTX_RECIPES
+    global CTX_RECIPES_LOADED
+    if not CTX_RECIPES_LOADED:
+        CTX_RECIPES = parse_recipes()
+        CTX_RECIPES_LOADED = True
 
 def get_recipe_list(request):
+    '''
+        list of recipes available
+    '''
+
     load_recipes()
-    return render(request, 'recipe_list.html', ctx_recipes)
+    return render(request, 'recipe_list.html', CTX_RECIPES)
+
 
 def get_recipe(request):
+    '''
+        for individual recipes
+    '''
+
     load_recipes()
-    recipes = ctx_recipes['recipes']
+    recipes = CTX_RECIPES['recipes']
     for recipe in recipes:
         if recipe['link'] == request.path:
             return render(request, 'recipe_base.html', recipe)
+    return render(request, 'invalid_page.html', recipe)
