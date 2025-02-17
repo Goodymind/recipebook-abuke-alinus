@@ -1,1 +1,4 @@
-Scripts/ 
+env
+__pycache__/
+sandbox.py
+sandbox.txt
