@@ -1,11 +1,5 @@
 from django.shortcuts import render
-from .models import Recipe, RecipeIngredient, Ingredient
-
-def load_recipes():
-    '''
-        loads the recipes for use
-    '''
-
+from .models import Recipe, RecipeIngredient
 
 def recipe_list(request):
     '''
@@ -15,6 +9,7 @@ def recipe_list(request):
     context = {
         'recipes': recipes
     }
+
     return render(request, 'recipe_list.html', context)
 
 def recipe(request, id):
@@ -27,4 +22,5 @@ def recipe(request, id):
         'recipe_ingredients': recipe_ingredients,
         'recipe': recipe,
     }
+    
     return render(request, 'recipe_base.html', context)

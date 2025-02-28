@@ -8,7 +8,7 @@
         <ul>
             {% for ingredient_pair in recipe_ingredients%}
             <li> {{ ingredient_pair.ingredient.name }} : {{ ingredient_pair.quantity }} 
-                    {{ingredient_pair.ingredient.unit }}
+                    {{ ingredient_pair.ingredient.unit }}
                     {% if ingredient_pair.quantity > 1 %}
                         s
                     {% endif %}
