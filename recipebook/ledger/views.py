@@ -1,30 +1,23 @@
 from django.shortcuts import render
-from .recipes.recipe_parser import parse_recipes
-
-CTX_RECIPES = {}
-CTX_RECIPES_LOADED = False
+from .models import Recipe, RecipeIngredient, Ingredient
 
 def load_recipes():
     '''
         loads the recipes for use
     '''
 
-    global CTX_RECIPES
-    global CTX_RECIPES_LOADED
-    if not CTX_RECIPES_LOADED:
-        CTX_RECIPES = parse_recipes()
-        CTX_RECIPES_LOADED = True
 
-def get_recipe_list(request):
+def recipe_list(request):
     '''
         list of recipes available
     '''
+    recipes = Recipe.objects.all()
+    context = {
+        'recipes': recipes
+    }
+    return render(request, 'recipe_list.html', context)
 
-    load_recipes()
-    return render(request, 'recipe_list.html', CTX_RECIPES)
-
-
-def get_recipe(request):
+def recipe(request):
     '''
         for individual recipes
     '''
