@@ -22,5 +22,5 @@ def recipe(request, id):
         'recipe_ingredients': recipe_ingredients,
         'recipe': recipe,
     }
-    
+
     return render(request, 'recipe_base.html', context)
