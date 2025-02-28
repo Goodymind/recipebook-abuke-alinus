@@ -1,5 +1,5 @@
 '''
-    Module providing a parser for recipes in JSON
+    <DEPRECATED> Module providing a parser for recipes in JSON
 '''
 
 import json

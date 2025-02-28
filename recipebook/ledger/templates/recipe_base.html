@@ -1,16 +1,21 @@
 {% extends 'base.html' %} {% load static %}
 
-{% block title %} {{ name }} {% endblock %}
+{% block title %} {{ recipe }} {% endblock %}
 {% block content %}
     <article>
-        <h1>{{ name }}</h1>
+        <h1>{{ recipe }}</h1>
         <h2>Ingredients</h2>
         <ul>
-            {% for ingredient in ingredients %}
-            <li> {{ ingredient.name }} : {{ ingredient.quantity }} </li>
+            {% for ingredient_pair in recipe_ingredients%}
+            <li> {{ ingredient_pair.ingredient.name }} : {{ ingredient_pair.quantity }} 
+                    {{ ingredient_pair.ingredient.unit }}
+                    {% if ingredient_pair.quantity > 1 %}
+                        s
+                    {% endif %}
+            </li>
             {% endfor %}
         </ul>
     </article>
-    <a href='/' >return to Recipe List</a>
+    <a href='/recipes/list' >return to Recipe List</a>
 
 {% endblock %}
