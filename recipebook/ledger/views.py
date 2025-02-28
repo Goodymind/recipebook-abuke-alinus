@@ -17,14 +17,14 @@ def recipe_list(request):
     }
     return render(request, 'recipe_list.html', context)
 
-def recipe(request):
+def recipe(request, id):
     '''
         for individual recipes
     '''
-
-    load_recipes()
-    recipes = CTX_RECIPES['recipes']
-    for recipe in recipes:
-        if recipe['link'] == request.path:
-            return render(request, 'recipe_base.html', recipe)
-    return render(request, 'invalid_page.html', recipe)
+    recipe = Recipe.objects.get(id=id)
+    recipe_ingredients = RecipeIngredient.objects.filter(recipe=recipe)
+    context = {
+        'recipe_ingredients': recipe_ingredients,
+        'recipe': recipe,
+    }
+    return render(request, 'recipe_base.html', context)
