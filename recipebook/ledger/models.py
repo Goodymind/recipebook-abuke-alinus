@@ -12,7 +12,7 @@ class Ingredient(models.Model):
     unit = models.CharField(max_length=63)
 
     def __str__(self):
-        return f'{self.name}, units: {self.unit}'
+        return f'{self.name}, {self.unit}'
 
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
