@@ -5,7 +5,7 @@
     <h1>Recipe List</h1>
     <ul> 
         {% for recipe in recipes %}
-            <li><h2><a href='/recipe/{{ forloop.counter }}' > {{ recipe.name }}</a></h2></li>
+            <li><h2><a href={% url "recipe-name" recipe.id %} > {{ recipe.name }}</a></h2></li>
         {% endfor %}
     </ul>
 {% endblock %}
