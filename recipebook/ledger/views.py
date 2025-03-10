@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .models import Recipe, RecipeIngredient
 
+@login_required
 def recipe_list(request):
     '''
         list of recipes available
@@ -12,6 +14,7 @@ def recipe_list(request):
 
     return render(request, 'recipe_list.html', context)
 
+@login_required
 def recipe(request, id):
     '''
         for individual recipes
