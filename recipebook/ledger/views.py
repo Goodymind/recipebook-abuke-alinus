@@ -30,6 +30,6 @@ def recipe(request, id):
 
 def root_redirect(request):
     if request.user.is_authenticated:
-        return redirect('recipe-list-name')
+        return redirect('recipe-list')
     else:
         return redirect('login')
