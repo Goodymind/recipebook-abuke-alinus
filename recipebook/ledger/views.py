@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Recipe, RecipeIngredient
 
@@ -27,3 +27,9 @@ def recipe(request, id):
     }
 
     return render(request, 'recipe_base.html', context)
+
+def root_redirect(request):
+    if request.user.is_authenticated:
+        return redirect('recipe-list-name')
+    else:
+        return redirect('login')
