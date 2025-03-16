@@ -28,8 +28,11 @@ def recipe(request, id):
 
     return render(request, 'recipe_base.html', context)
 
+def home(request):
+    return render(request, 'home.html')
+
 def root_redirect(request):
     if request.user.is_authenticated:
         return redirect('recipe-list')
     else:
-        return redirect('login')
+        return redirect('home')
