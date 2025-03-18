@@ -2,3 +2,4 @@ env
 __pycache__/
 sandbox.py
 sandbox.txt
+db.sqlite3

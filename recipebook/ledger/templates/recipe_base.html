@@ -1,17 +1,16 @@
-{% extends 'base.html' %} {% load static %}
+{% extends 'base.html' %}
 
 {% block title %} {{ recipe }} {% endblock %}
+{% block header %}<h2>Detailed Recipe Ingredients</h2>{% endblock %}
 {% block content %}
     <article>
         <h1>{{ recipe }}</h1>
+        <h2>Author: {{ recipe.author }}</h2>
         <h2>Ingredients</h2>
         <ul>
             {% for ingredient_pair in recipe_ingredients%}
             <li> {{ ingredient_pair.ingredient.name }} : {{ ingredient_pair.quantity }} 
                     {{ ingredient_pair.ingredient.unit }}
-                    {% if ingredient_pair.quantity > 1 %}
-                        s
-                    {% endif %}
             </li>
             {% endfor %}
         </ul>

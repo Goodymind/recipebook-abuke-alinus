@@ -7,7 +7,24 @@
     {% block styles %}{% endblock %}
 </head>
 <body>
-    <h1>Recipe Book</h1>
+    <header>
+        <h1>Recipe Book</h1>
+        {% block header %} {% endblock %}
+        <ul>
+            <li>
+                {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Log Out</button>
+                </form>
+                {% else %}
+                <a href="login"><button>Log In</button></a>
+                {% endif %}
+            </li>
+            <li><a href= {% url "home" %}>Home</a></li>
+            <li><a href={% url "recipe-list" %}>Recipes</a></li>
+        </ul>
+    </header>
     <div id="content">
         {% block content %} {% endblock %}
     </div>
