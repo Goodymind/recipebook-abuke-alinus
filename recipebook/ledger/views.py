@@ -29,10 +29,17 @@ def recipe(request, id):
     return render(request, 'recipe_base.html', context)
 
 def home(request):
+    '''
+        home page
+    '''
     return render(request, 'home.html')
 
 def root_redirect(request):
+    '''
+        redirect visitor to home page if not logged in and
+        recipe-list if logged in.
+    '''
     if request.user.is_authenticated:
         return redirect('recipe-list')
-    else:
-        return redirect('home')
+    
+    return redirect('home')
