@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Recipe, RecipeIngredient
+from .models import Recipe, RecipeIngredient, RecipeImage
 
 @login_required
 def recipe_list(request):
@@ -21,9 +21,11 @@ def recipe(request, id):
     '''
     recipe = Recipe.objects.get(id=id)
     recipe_ingredients = RecipeIngredient.objects.filter(recipe=recipe)
+    recipe_image = RecipeImage.objects.filter(recipe=recipe)
     context = {
         'recipe_ingredients': recipe_ingredients,
         'recipe': recipe,
+        'recipe_image': recipe_image,
     }
 
     return render(request, 'recipe_base.html', context)
