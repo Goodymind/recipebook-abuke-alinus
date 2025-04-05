@@ -30,6 +30,13 @@ def recipe(request, id):
 
     return render(request, 'recipe_base.html', context)
 
+@login_required
+def recipe_upload(request):
+    '''
+        for uploading recipes
+    '''
+    return render(request, 'recipe_upload.html')
+
 def home(request):
     '''
         home page
