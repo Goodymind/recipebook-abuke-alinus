@@ -44,3 +44,11 @@ class RecipeIngredient(models.Model):
 
     def __str__(self):
         return f'{self.recipe}'
+
+class RecipeImage(models.Model):
+    '''
+        accepts an Image, description, and recipe
+    '''
+    image = models.ImageField(blank=False)
+    description = models.TextField(max_length=255)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
