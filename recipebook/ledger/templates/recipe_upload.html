@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Upload a Recipe{% endblock %}
+{% block header %}<h2>Upload a Recipe</h2>{% endblock %}
+{% block content %}
+    <article>
+        <form action="/" method="post">
+            {% csrf_token %}
+            <label for="ledger">
+                <span>Recipe Name</span>
+                <input type="text" name="Recipe Name" id="recipe_name">
+            </label>
+        </form>
+    </article>
+    <a href="{% url "recipe-list" %}"></a>
+{% endblock  %}
