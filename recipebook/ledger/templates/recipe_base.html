@@ -5,7 +5,7 @@
 {% block content %}
     <article>
         <h1>{{ recipe }}</h1>
-        <img src="{{ recipe_image.image }}" alt="">
+        <img src="{{ recipe_image.image }}" alt="{{ recipe_image.description }}">
         <h2>Author: {{ recipe.author }}</h2>
         <h2>Ingredients</h2>
         <ul>

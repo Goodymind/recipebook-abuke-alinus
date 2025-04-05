@@ -21,7 +21,7 @@ def recipe(request, id):
     '''
     recipe = Recipe.objects.get(id=id)
     recipe_ingredients = RecipeIngredient.objects.filter(recipe=recipe)
-    recipe_image = RecipeImage.objects.filter(recipe=recipe)
+    recipe_image = RecipeImage.objects.get(recipe=recipe)
     context = {
         'recipe_ingredients': recipe_ingredients,
         'recipe': recipe,
