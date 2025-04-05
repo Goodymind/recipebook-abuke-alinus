@@ -4,13 +4,67 @@
 {% block header %}<h2>Upload a Recipe</h2>{% endblock %}
 {% block content %}
     <article>
-        <form action="/" method="post">
+        <form action="/" method="post" id="form-container">
             {% csrf_token %}
-            <label for="ledger">
+            <label for="recipe_name">
                 <span>Recipe Name</span>
                 <input type="text" name="Recipe Name" id="recipe_name">
             </label>
+            <br>
+            <label for="ingredients">
+                <span>Ingredients</span>
+                <br>
+                <button type="button" onclick="addIngredient()">Add Ingredients</button>
+            </label>
+            <input type="submit" value="Submit">
         </form>
     </article>
     <a href="{% url "recipe-list" %}"></a>
 {% endblock  %}
+
+{% block scripts %}
+<script>
+    function addIngredient() {
+        const container = document.getElementById('form-container');
+        
+        const ingredientWrapper = document.createElement('div');
+        ingredientWrapper.className = 'ingredient-wrapper';
+
+        const newIngredient = document.createElement('input');
+        newIngredient.name = 'ingredient';
+        newIngredient.type = 'text';
+        newIngredient.id = 'ingredient';
+        newIngredient.placeholder = "Ingredient Name";
+        
+        const quantity = document.createElement('input');
+        quantity.name = 'quantity';
+        quantity.type = 'text';
+        quantity.id = 'quantity';
+        quantity.placeholder = "Amount"
+        
+        const unit = document.createElement('input');
+        unit.name = 'unit';
+        unit.type = 'text';
+        unit.id = 'unit';
+        unit.placeholder = 'Unit (Kg, mL, etc)'
+
+        const deleteButton = document.createElement('button')
+        deleteButton.name = 'deleteButton';
+        deleteButton.type = 'button';
+        deleteButton.innerText = 'Remove';
+        deleteButton.onclick = function () {
+            container.removeChild(ingredientWrapper);
+        }
+        
+        
+        const submit = container.querySelector('input[type="submit"]');
+
+        ingredientWrapper.append(newIngredient);
+        ingredientWrapper.append(quantity);
+        ingredientWrapper.append(unit);
+        ingredientWrapper.append(deleteButton);
+
+        container.insertBefore(ingredientWrapper, submit);
+    }
+</script>
+{% endblock scripts %}
