@@ -49,6 +49,6 @@ class RecipeImage(models.Model):
     '''
         accepts an Image, description, and recipe
     '''
-    image = models.ImageField(blank=False)
+    image = models.ImageField(upload_to='images/', null=True)
     description = models.TextField(max_length=255)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
