@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Recipe, RecipeIngredient, RecipeImage
+from .models import Recipe, RecipeIngredient, RecipeImage, Ingredient, Profile
 
 @login_required
 def recipe_list(request):
@@ -35,6 +35,41 @@ def recipe_upload(request):
     '''
         for uploading recipes
     '''
+    if request.method == 'POST':
+        recipe = Recipe()
+        recipe.name = request.POST.get('recipe_name')
+        recipe.author = Profile.objects.get(user=request.user)
+        recipe.save()
+
+        recipe_image = RecipeImage()
+        recipe_image.recipe = recipe
+        recipe_image.image = request.FILES.get('image')
+        recipe_image.description = "alt text"
+        recipe_image.save()
+
+        ingredient_values = request.POST.getlist('ingredient')
+        quantity_values = request.POST.getlist('quantity')
+        unit_values = request.POST.getlist('unit')
+
+        ingredient_list = []
+
+        for ingredient_name, ingredient_unit in zip(ingredient_values, unit_values):
+            try:
+                ingredient = Ingredient.objects.get(name=ingredient_name, unit=ingredient_unit)
+            except Ingredient.DoesNotExist:
+                ingredient = Ingredient()
+                ingredient.name = ingredient_name
+                ingredient.unit = ingredient_unit
+                ingredient.save()
+            ingredient_list.append(ingredient)
+
+        for ingredient, quantity in zip(ingredient_list, quantity_values):
+            recipe_ingredient = RecipeIngredient()
+            recipe_ingredient.recipe = recipe
+            recipe_ingredient.ingredient = ingredient
+            recipe_ingredient.quantity = quantity
+            recipe_ingredient.save()
+
     return render(request, 'recipe_upload.html')
 
 def home(request):

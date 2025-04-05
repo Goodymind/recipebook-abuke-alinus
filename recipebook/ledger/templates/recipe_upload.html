@@ -4,11 +4,11 @@
 {% block header %}<h2>Upload a Recipe</h2>{% endblock %}
 {% block content %}
     <article>
-        <form action="/" method="post" id="form-container">
+        <form method="post" id="form-container" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="recipe_name">
                 <span>Recipe Name</span>
-                <input type="text" name="Recipe Name" id="recipe_name">
+                <input type="text" name="recipe_name" id="recipe_name">
             </label>
             <br>
             <label for="image">
