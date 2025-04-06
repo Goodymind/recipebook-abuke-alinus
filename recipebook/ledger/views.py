@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from .models import Recipe, RecipeIngredient, RecipeImage, Ingredient, Profile
 
 def __upload_recipe_image__(request, recipe):
+    '''
+        Creates a new Recipe Image from POST REQUEST
+    '''
     recipe_image = RecipeImage()
     recipe_image.recipe = recipe
     recipe_image.image = request.FILES.get('image')
@@ -41,10 +44,28 @@ def recipe(request, id):
 
     return render(request, 'recipe_base.html', context)
 
+def __get_ingredient_list__(ingredient_values, unit_values):
+    '''
+        returns a list of ingredients for the newly uploaded recipe.
+        Creates a new ingredient if the ingredient does not exist.
+    '''
+    ingredient_list = []
+    for ingredient_name, ingredient_unit in zip(ingredient_values, unit_values):
+        try:
+            ingredient = Ingredient.objects.get(name=ingredient_name, unit=ingredient_unit)
+        except Ingredient.DoesNotExist:
+            ingredient = Ingredient()
+            ingredient.name = ingredient_name
+            ingredient.unit = ingredient_unit
+            ingredient.save()
+        ingredient_list.append(ingredient)
+    
+    return ingredient_list
+
 @login_required
 def recipe_upload(request):
     '''
-        for uploading recipes
+        for uploading recipes and linking ingredients and quantities to the recipe
     '''
     if request.method == 'POST':
         recipe = Recipe()
@@ -56,17 +77,7 @@ def recipe_upload(request):
         quantity_values = request.POST.getlist('quantity')
         unit_values = request.POST.getlist('unit')
 
-        ingredient_list = []
-
-        for ingredient_name, ingredient_unit in zip(ingredient_values, unit_values):
-            try:
-                ingredient = Ingredient.objects.get(name=ingredient_name, unit=ingredient_unit)
-            except Ingredient.DoesNotExist:
-                ingredient = Ingredient()
-                ingredient.name = ingredient_name
-                ingredient.unit = ingredient_unit
-                ingredient.save()
-            ingredient_list.append(ingredient)
+        ingredient_list = __get_ingredient_list__(ingredient_values, unit_values)
 
         for ingredient, quantity in zip(ingredient_list, quantity_values):
             recipe_ingredient = RecipeIngredient()
