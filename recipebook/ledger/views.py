@@ -79,7 +79,7 @@ def recipe_image_upload(request, pk):
     recipe = Recipe.objects.get(pk=pk)
     if request.method == 'POST':
         __upload_recipe_image__(request, recipe)
-    return render(request, 'recipe_image_uploaded.html', {'recipe': recipe})
+    return render(request, 'recipe_image_upload.html', {'recipe': recipe})
 
 def home(request):
     '''
