@@ -19,11 +19,11 @@
         </ul>
     </article>
     <a href="{% url "recipe-list" %}" >return to Recipe List</a>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="image">
             <span>Upload Image</span>
-            <input type="file" name="" id="image" accept="image/*">
+            <input type="file" name="image" id="image" accept="image/*">
         </label>
         <input type="submit" value="Submit">
     </form>

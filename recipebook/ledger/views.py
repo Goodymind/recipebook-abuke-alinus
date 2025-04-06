@@ -2,6 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Recipe, RecipeIngredient, RecipeImage, Ingredient, Profile
 
+def __upload_recipe_image__(request, recipe):
+    recipe_image = RecipeImage()
+    recipe_image.recipe = recipe
+    recipe_image.image = request.FILES.get('image')
+    recipe_image.description = "alt text"
+    recipe_image.save()
+
 @login_required
 def recipe_list(request):
     '''
@@ -20,6 +27,10 @@ def recipe(request, id):
         for individual recipes
     '''
     recipe = Recipe.objects.get(id=id)
+
+    if request.method == 'POST':
+        __upload_recipe_image__(request, recipe)
+
     recipe_ingredients = RecipeIngredient.objects.filter(recipe=recipe)
     recipe_images = RecipeImage.objects.filter(recipe=recipe)
     context = {
@@ -41,11 +52,7 @@ def recipe_upload(request):
         recipe.author = Profile.objects.get(user=request.user)
         recipe.save()
 
-        recipe_image = RecipeImage()
-        recipe_image.recipe = recipe
-        recipe_image.image = request.FILES.get('image')
-        recipe_image.description = "alt text"
-        recipe_image.save()
+        __upload_recipe_image__(request, recipe)
 
         ingredient_values = request.POST.getlist('ingredient')
         quantity_values = request.POST.getlist('quantity')
