@@ -52,8 +52,6 @@ def recipe_upload(request):
         recipe.author = Profile.objects.get(user=request.user)
         recipe.save()
 
-        __upload_recipe_image__(request, recipe)
-
         ingredient_values = request.POST.getlist('ingredient')
         quantity_values = request.POST.getlist('quantity')
         unit_values = request.POST.getlist('unit')
