@@ -27,10 +27,6 @@ def recipe(request, id):
         for individual recipes
     '''
     recipe = Recipe.objects.get(id=id)
-
-    if request.method == 'POST':
-        __upload_recipe_image__(request, recipe)
-
     recipe_ingredients = RecipeIngredient.objects.filter(recipe=recipe)
     recipe_images = RecipeImage.objects.filter(recipe=recipe)
     context = {
@@ -78,6 +74,12 @@ def recipe_upload(request):
             recipe_ingredient.save()
 
     return render(request, 'recipe_upload.html')
+
+def recipe_image_upload(request, pk):
+    recipe = Recipe.objects.get(pk=pk)
+    if request.method == 'POST':
+        __upload_recipe_image__(request, recipe)
+    return render(request, 'recipe_image_uploaded.html', {'recipe': recipe})
 
 def home(request):
     '''
