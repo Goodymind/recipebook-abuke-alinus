@@ -3,3 +3,6 @@ __pycache__/
 sandbox.py
 sandbox.txt
 db.sqlite3
+migrations/
+media/
+.env

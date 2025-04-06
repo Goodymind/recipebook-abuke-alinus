@@ -1,10 +1,13 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block title %} {{ recipe }} {% endblock %}
 {% block header %}<h2>Detailed Recipe Ingredients</h2>{% endblock %}
 {% block content %}
     <article>
         <h1>{{ recipe }}</h1>
+        {% for recipe_image in recipe_images %}
+            <img src="{{ recipe_image.image.url }}" alt="{{ recipe_image.description }}">
+        {% endfor %}
+        <a href="{% url "upload-image"  recipe.id %}">Upload Image</a>
         <h2>Author: {{ recipe.author }}</h2>
         <h2>Ingredients</h2>
         <ul>
@@ -15,6 +18,5 @@
             {% endfor %}
         </ul>
     </article>
-    <a href='/recipes/list' >return to Recipe List</a>
-
+    <a href="{% url "recipe-list" %}" >return to Recipe List</a>
 {% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} {{ recipe }} {% endblock %}
+{% block header %}<h2>Upload Photo for {{ recipe.name }}</h2>{% endblock %}
+{% block content %}
+<form action="{% url "recipe" recipe.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="image">
+        <span>Upload Image</span>
+        <input type="file" name="image" id="image" accept="image/*">
+    </label>
+    <label for="description">
+        <span>Description</span>
+        <input type="text" name="description" id="description">
+    </label>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
