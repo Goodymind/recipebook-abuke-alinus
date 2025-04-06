@@ -77,6 +77,7 @@ def recipe_upload(request):
 
     return render(request, 'recipe_upload.html')
 
+@login_required
 def recipe_image_upload(request, pk):
     recipe = Recipe.objects.get(pk=pk)
     return render(request, 'recipe_image_upload.html', {'recipe': recipe})
