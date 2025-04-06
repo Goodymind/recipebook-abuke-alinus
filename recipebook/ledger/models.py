@@ -52,3 +52,6 @@ class RecipeImage(models.Model):
     image = models.ImageField(upload_to='images/', null=True)
     description = models.TextField(max_length=255)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.recipe}'
