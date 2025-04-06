@@ -6,7 +6,7 @@ def __upload_recipe_image__(request, recipe):
     recipe_image = RecipeImage()
     recipe_image.recipe = recipe
     recipe_image.image = request.FILES.get('image')
-    recipe_image.description = "alt text"
+    recipe_image.description = request.POST.get('description')
     recipe_image.save()
 
 @login_required
