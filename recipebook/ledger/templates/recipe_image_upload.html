@@ -2,7 +2,7 @@
 {% block title %} {{ recipe }} {% endblock %}
 {% block header %}<h2>Upload Photo for {{ recipe.name }}</h2>{% endblock %}
 {% block content %}
-<form method="post" enctype="multipart/form-data">
+<form action="{% url "recipe" recipe.id %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <label for="image">
         <span>Upload Image</span>
